@@ -1,4 +1,3 @@
-'use strict';
 import * as Alexa from 'alexa-sdk';
 
 //Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.  
