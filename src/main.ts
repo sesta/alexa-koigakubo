@@ -37,7 +37,7 @@ const koigakuboTimes = [
   /* 23時 */ [9, 23, 37, 57]
 ];
 
-export function handler (event, context, callback) {
+export const handler = (event, context, callback) => {
   const alexa = Alexa.handler(event, context);
   alexa.APP_ID = APP_ID;
   alexa.registerHandlers(handlers);
@@ -45,7 +45,7 @@ export function handler (event, context, callback) {
 };
 
 const handlers = {
-  'LaunchRequest': function () {
+  'LaunchRequest': () => {
     const nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000);
     const nowHours = nowDate.getHours();
     const nowMinutes = nowDate.getMinutes();
@@ -66,18 +66,18 @@ const handlers = {
     const message: String = `近い順に${nextTimes.join('、')}です`;
     this.emit(':tellWithCard', message, SKILL_NAME, message)
   },
-  'AMAZON.HelpIntent': function () {
+  'AMAZON.HelpIntent': () => {
     const speechOutput = HELP_MESSAGE;
     const reprompt = HELP_REPROMPT;
     this.emit(':ask', speechOutput, reprompt);
   },
-  'AMAZON.CancelIntent': function () {
+  'AMAZON.CancelIntent': () => {
     this.emit(':tell', STOP_MESSAGE);
   },
-  'AMAZON.StopIntent': function () {
+  'AMAZON.StopIntent': () => {
     this.emit(':tell', STOP_MESSAGE);
   },
-  'SessionEndedRequest': function () {
+  'SessionEndedRequest': () => {
     // Nothing to do
   }
 };
