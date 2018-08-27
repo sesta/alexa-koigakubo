@@ -49,14 +49,17 @@ const handlers = {
     const nowHours = nowDate.getHours();
     const nowMinutes = nowDate.getMinutes();
     const nextTimes = [];
+    
+    // 近い3つの時間を取ってくる
+    // TODO: DBから持ってくるかcoolな実装に変える
     koigakuboTimes[nowHours].forEach(minute => {
-      if ((nowMinutes + 5) < minute) {
+      if (nextTimes.length < 3 && (nowMinutes + 5) < minute) {
         nextTimes.push(`${nowHours}時${minute}分`);
       }
     });
     if (nextTimes.length < 3) {
       koigakuboTimes[nowHours + 1].forEach(minute => {
-        if (nextTimes.length < 3) {
+        if (nextTimes.length < 3 && (nowMinutes + 5) < (minute + 60)) {
           nextTimes.push(`${nowHours + 1}時${minute}分`);
         }
       });
