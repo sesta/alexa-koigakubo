@@ -44,7 +44,7 @@ export const handler = (event, context, callback) => {
 };
 
 const handlers = {
-  'LaunchRequest': () => {
+  'LaunchRequest': function () {
     const nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000);
     const nowHours = nowDate.getHours();
     const nowMinutes = nowDate.getMinutes();
@@ -68,18 +68,18 @@ const handlers = {
     const message: String = `近い順に${nextTimes.join('、')}です`;
     this.emit(':tellWithCard', message, SKILL_NAME, message)
   },
-  'AMAZON.HelpIntent': () => {
+  'AMAZON.HelpIntent': function () {
     const speechOutput = HELP_MESSAGE;
     const reprompt = HELP_REPROMPT;
     this.emit(':ask', speechOutput, reprompt);
   },
-  'AMAZON.CancelIntent': () => {
+  'AMAZON.CancelIntent': function () {
     this.emit(':tell', STOP_MESSAGE);
   },
-  'AMAZON.StopIntent': () => {
+  'AMAZON.StopIntent': function () {
     this.emit(':tell', STOP_MESSAGE);
   },
-  'SessionEndedRequest': () => {
+  'SessionEndedRequest': function () {
     // Nothing to do
   }
 };
