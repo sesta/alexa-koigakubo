@@ -36,7 +36,7 @@ const koigakuboTimes = [
   /* 23時 */ [9, 23, 37, 57]
 ];
 
-export const handler = (event, context, callback) => {
+export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context);
   alexa.APP_ID = APP_ID;
   alexa.registerHandlers(handlers);
