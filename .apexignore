@@ -1,8 +1,10 @@
 README.md
 function.json
+package-lock.json
 package.json
 tsconfig.json
 webpack.config.js
 
 node_modules
 src
+test
