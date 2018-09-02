@@ -10,7 +10,7 @@ describe('cosntructor', () => {
   it ('指定したtimetableで初期化できる', () => {
     const test = [
       [1, 2, 3]
-    ];
+    ]
     const koigakuboTimetable = new KoigakuboTimetable(test)
     assert.equal(koigakuboTimetable.getTimetable, test)
   })
@@ -30,7 +30,7 @@ describe('gerRecentTimes', () => {
       { hour: 1, minute: 20},
       { hour: 1, minute: 30},
       { hour: 2, minute: 0},
-    ];
+    ]
     assert.deepEqual(koigakuboTimetable.getRecentTiems(), expectedTimes)
   })
 })

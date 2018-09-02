@@ -17,7 +17,7 @@ export default class KoigakuboTimetable implements Timetable {
   }
 
   get getTimetable () {
-    return this.timetable;
+    return this.timetable
   }
 
   getRecentTiems () {
@@ -74,4 +74,4 @@ export const weekday = [
   /* 21時 */ [0, 12, 22, 33, 45, 54],
   /* 22時 */ [8, 22, 37, 52],
   /* 23時 */ [9, 23, 37, 57]  
-];
+]
