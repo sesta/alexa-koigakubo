@@ -3,9 +3,13 @@ interface Timetable {
 }
 
 export default class KoigakuboTimetable implements Timetable {
-    private timetable: number[][]
-    constructor() {
-        this.timetable = weekday
+    private nowDate: Date
+
+    constructor(private timetable?: number[][]) {
+        if (typeof timetable === 'undefined') {
+            this.timetable = weekday
+        }
+        this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
 
     get getTimetable () {
@@ -15,7 +19,7 @@ export default class KoigakuboTimetable implements Timetable {
     // TODO: getWeekend も実装する
 }
 
-const weekday = [
+export const weekday = [
     /*  0時 */ [12],
     /*  1時 */ [],
     /*  2時 */ [],
