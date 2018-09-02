@@ -1,5 +1,5 @@
 import * as Alexa from 'alexa-sdk';
-import KoigakuboTimetables from './timetable/koigakubo'
+import KoigakuboTimetable from './timetable/koigakubo'
 
 //Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.  
 //Make sure to enclose your value in quotes, like this: APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
@@ -10,9 +10,6 @@ const HELP_MESSAGE = "ヘルプのメッセージが入るよ";
 const HELP_REPROMPT = "どうしますか？";
 const STOP_MESSAGE = "さようなら";
 
-const koigakuboTimetables = new KoigakuboTimetables();
-const koigakuboTimes = koigakuboTimetables.weekday
-
 export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context);
   alexa.APP_ID = APP_ID;
@@ -22,27 +19,13 @@ export function handler (event, context, callback) {
 
 const handlers = {
   'LaunchRequest': function () {
-    const nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000);
-    const nowHours = nowDate.getHours();
-    const nowMinutes = nowDate.getMinutes();
-    const nextTimes = [];
-    
-    // 近い3つの時間を取ってくる
-    // TODO: DBから持ってくるかcoolな実装に変える
-    koigakuboTimes[nowHours].forEach(minute => {
-      if (nextTimes.length < 3 && (nowMinutes + 5) < minute) {
-        nextTimes.push(`${nowHours}時${minute}分`);
-      }
-    });
-    if (nextTimes.length < 3) {
-      koigakuboTimes[nowHours + 1].forEach(minute => {
-        if (nextTimes.length < 3 && (nowMinutes + 5) < (minute + 60)) {
-          nextTimes.push(`${nowHours + 1}時${minute}分`);
-        }
-      });
-    }
+    const koigakuboTimetable = new KoigakuboTimetable()
+    const recentTimes = koigakuboTimetable.getRecentTiems()
+    const timesString = recentTimes.map(time => {
+      return `${time.hour}時${time.minute}分`
+    }).join('、')
 
-    const message: String = `近い順に${nextTimes.join('、')}です`;
+    let message: String = `近い順に${timesString}です`
     this.emit(':tellWithCard', message, SKILL_NAME, message)
   },
   'AMAZON.HelpIntent': function () {
