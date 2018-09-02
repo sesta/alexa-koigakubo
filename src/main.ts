@@ -11,7 +11,7 @@ const HELP_REPROMPT = "どうしますか？";
 const STOP_MESSAGE = "さようなら";
 
 const koigakuboTimetable = new KoigakuboTimetable();
-const koigakuboTimes = koigakuboTimetable.weekday
+const koigakuboTimes = koigakuboTimetable.getTimetable;
 
 export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context);
