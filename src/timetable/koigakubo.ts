@@ -1,77 +1,77 @@
 interface Timetable {
-    getTimetable: number[][]
-    getRecentTiems (): Array<{
-        hour: number,
-        minute: number
-    }>
+  getTimetable: number[][]
+  getRecentTiems (): Array<{
+    hour: number,
+    minute: number
+  }>
 }
 
 export default class KoigakuboTimetable implements Timetable {
-    constructor(private timetable?: number[][], private nowDate?: Date) {
-        if (typeof timetable === 'undefined') {
-            this.timetable = weekday
-        }
-        if (typeof nowDate === 'undefined') {
-            this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
-        }
+  constructor(private timetable?: number[][], private nowDate?: Date) {
+    if (typeof timetable === 'undefined') {
+      this.timetable = weekday
     }
-
-    get getTimetable () {
-        return this.timetable;
+    if (typeof nowDate === 'undefined') {
+      this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
+  }
 
-    getRecentTiems () {
-        const nowHour = this.nowDate.getHours()
-        const nowMinute = this.nowDate.getMinutes()
-        const recentTiems: Array<{ hour: number, minute: number }> = []
+  get getTimetable () {
+    return this.timetable;
+  }
 
-        for (let hour = nowHour ; hour < 24 ; hour++) {
-            const minutes = this.timetable[hour]
-            for (let minuteIndex = 0 ; minuteIndex < minutes.length ; minuteIndex++) {
-                const diffMinute = (hour - nowHour) * 60 + (minutes[minuteIndex] - nowMinute)
+  getRecentTiems () {
+    const nowHour = this.nowDate.getHours()
+    const nowMinute = this.nowDate.getMinutes()
+    const recentTiems: Array<{ hour: number, minute: number }> = []
 
-                if (diffMinute > 5) {
-                    recentTiems.push({
-                        hour,
-                        minute: minutes[minuteIndex]
-                    })
-                }
+    for (let hour = nowHour ; hour < 24 ; hour++) {
+      const minutes = this.timetable[hour]
+      for (let minuteIndex = 0 ; minuteIndex < minutes.length ; minuteIndex++) {
+        const diffMinute = (hour - nowHour) * 60 + (minutes[minuteIndex] - nowMinute)
 
-                if (recentTiems.length >= 3) {
-                    return recentTiems
-                }
-            }
+        if (diffMinute > 5) {
+          recentTiems.push({
+            hour,
+            minute: minutes[minuteIndex]
+          })
         }
 
-        return recentTiems
+        if (recentTiems.length >= 3) {
+          return recentTiems
+        }
+      }
     }
 
-    // TODO: getWeekend も実装する
+    return recentTiems
+  }
+
+  // TODO: getWeekend も実装する
 }
 
 export const weekday = [
-    /*  0時 */ [12],
-    /*  1時 */ [],
-    /*  2時 */ [],
-    /*  3時 */ [],
-    /*  4時 */ [],
-    /*  5時 */ [13, 33, 49],
-    /*  6時 */ [4, 20, 31, 42, 53],
-    /*  7時 */ [1, 9, 16, 24, 32, 40, 46, 54],
-    /*  8時 */ [2, 9, 16, 24, 31, 39, 47, 56],
-    /*  9時 */ [4, 16, 26, 36, 46, 56],
-    /* 10時 */ [5, 15, 25, 35, 46, 55],
-    /* 11時 */ [5, 15, 25, 35, 46, 55],
-    /* 12時 */ [5, 15, 25, 35, 46, 55],
-    /* 13時 */ [5, 15, 25, 35, 46, 55],
-    /* 14時 */ [5, 15, 25, 35, 46, 55],
-    /* 15時 */ [5, 15, 25, 35, 46, 55],
-    /* 16時 */ [5, 16, 26, 36, 46, 56],
-    /* 17時 */ [6, 17, 27, 39, 49],
-    /* 18時 */ [0, 10, 20, 30, 40, 50],
-    /* 19時 */ [0, 10, 20, 30, 40, 50],
-    /* 20時 */ [0, 10, 20, 30, 40, 50],
-    /* 21時 */ [0, 12, 22, 33, 45, 54],
-    /* 22時 */ [8, 22, 37, 52],
-    /* 23時 */ [9, 23, 37, 57]  
+  /*  0時 */ [12],
+  /*  1時 */ [],
+  /*  2時 */ [],
+  /*  3時 */ [],
+  /*  4時 */ [],
+  /*  5時 */ [13, 33, 49],
+  /*  6時 */ [4, 20, 31, 42, 53],
+  /*  7時 */ [1, 9, 16, 24, 32, 40, 46, 54],
+  /*  8時 */ [2, 9, 16, 24, 31, 39, 47, 56],
+  /*  9時 */ [4, 16, 26, 36, 46, 56],
+  /* 10時 */ [5, 15, 25, 35, 46, 55],
+  /* 11時 */ [5, 15, 25, 35, 46, 55],
+  /* 12時 */ [5, 15, 25, 35, 46, 55],
+  /* 13時 */ [5, 15, 25, 35, 46, 55],
+  /* 14時 */ [5, 15, 25, 35, 46, 55],
+  /* 15時 */ [5, 15, 25, 35, 46, 55],
+  /* 16時 */ [5, 16, 26, 36, 46, 56],
+  /* 17時 */ [6, 17, 27, 39, 49],
+  /* 18時 */ [0, 10, 20, 30, 40, 50],
+  /* 19時 */ [0, 10, 20, 30, 40, 50],
+  /* 20時 */ [0, 10, 20, 30, 40, 50],
+  /* 21時 */ [0, 12, 22, 33, 45, 54],
+  /* 22時 */ [8, 22, 37, 52],
+  /* 23時 */ [9, 23, 37, 57]  
 ];
