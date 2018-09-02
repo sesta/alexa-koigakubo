@@ -1,5 +1,5 @@
 import * as Alexa from 'alexa-sdk';
-import KoigakuboTimetables from './timetable/koigakubo'
+import KoigakuboTimetable from './timetable/koigakubo'
 
 //Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.  
 //Make sure to enclose your value in quotes, like this: APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
@@ -10,8 +10,8 @@ const HELP_MESSAGE = "ヘルプのメッセージが入るよ";
 const HELP_REPROMPT = "どうしますか？";
 const STOP_MESSAGE = "さようなら";
 
-const koigakuboTimetables = new KoigakuboTimetables();
-const koigakuboTimes = koigakuboTimetables.weekday
+const koigakuboTimetable = new KoigakuboTimetable();
+const koigakuboTimes = koigakuboTimetable.weekday
 
 export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context);

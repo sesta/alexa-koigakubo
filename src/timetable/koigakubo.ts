@@ -1,9 +1,9 @@
-interface Timetables {
+interface Timetable {
     weekday: number[][]
     weekend?: number[][]
 }
 
-export default class KoigakuboTimetables implements Timetables {
+export default class KoigakuboTimetable implements Timetable {
     weekday = [
         /*  0時 */ [12],
         /*  1時 */ [],
