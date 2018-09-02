@@ -22,27 +22,12 @@ export function handler (event, context, callback) {
 
 const handlers = {
   'LaunchRequest': function () {
-    const nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000);
-    const nowHours = nowDate.getHours();
-    const nowMinutes = nowDate.getMinutes();
-    const nextTimes = [];
-    
-    // 近い3つの時間を取ってくる
-    // TODO: DBから持ってくるかcoolな実装に変える
-    koigakuboTimes[nowHours].forEach(minute => {
-      if (nextTimes.length < 3 && (nowMinutes + 5) < minute) {
-        nextTimes.push(`${nowHours}時${minute}分`);
-      }
-    });
-    if (nextTimes.length < 3) {
-      koigakuboTimes[nowHours + 1].forEach(minute => {
-        if (nextTimes.length < 3 && (nowMinutes + 5) < (minute + 60)) {
-          nextTimes.push(`${nowHours + 1}時${minute}分`);
-        }
-      });
-    }
+    const recentTimes = koigakuboTimetable.getRecentTiems();
+    const timesString = recentTimes.map(time => {
+      return `${time.hour}時${time.minute}分`
+    }).join('、')
 
-    const message: String = `近い順に${nextTimes.join('、')}です`;
+    let message: String = `近い順に${timesString}です`
     this.emit(':tellWithCard', message, SKILL_NAME, message)
   },
   'AMAZON.HelpIntent': function () {

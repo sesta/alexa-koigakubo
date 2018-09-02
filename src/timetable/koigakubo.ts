@@ -1,19 +1,49 @@
 interface Timetable {
     getTimetable: number[][]
+    getRecentTiems (): Array<{
+        hour: number,
+        minute: number
+    }>
 }
 
 export default class KoigakuboTimetable implements Timetable {
-    private nowDate: Date
-
-    constructor(private timetable?: number[][]) {
+    constructor(private timetable?: number[][], private nowDate?: Date) {
         if (typeof timetable === 'undefined') {
             this.timetable = weekday
         }
-        this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
+        if (typeof nowDate === 'undefined') {
+            this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
+        }
     }
 
     get getTimetable () {
         return this.timetable;
+    }
+
+    getRecentTiems () {
+        const nowHour = this.nowDate.getHours()
+        const nowMinute = this.nowDate.getMinutes()
+        const recentTiems: Array<{ hour: number, minute: number }> = []
+
+        for (let hour = nowHour ; hour < 24 ; hour++) {
+            const minutes = this.timetable[hour]
+            for (let minuteIndex = 0 ; minuteIndex < minutes.length ; minuteIndex++) {
+                const diffMinute = (hour - nowHour) * 60 + (minutes[minuteIndex] - nowMinute)
+
+                if (diffMinute > 5) {
+                    recentTiems.push({
+                        hour,
+                        minute: minutes[minuteIndex]
+                    })
+                }
+
+                if (recentTiems.length >= 3) {
+                    return recentTiems
+                }
+            }
+        }
+
+        return recentTiems
     }
 
     // TODO: getWeekend も実装する
