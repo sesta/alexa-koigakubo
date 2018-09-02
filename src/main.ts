@@ -10,9 +10,6 @@ const HELP_MESSAGE = "ヘルプのメッセージが入るよ";
 const HELP_REPROMPT = "どうしますか？";
 const STOP_MESSAGE = "さようなら";
 
-const koigakuboTimetable = new KoigakuboTimetable();
-const koigakuboTimes = koigakuboTimetable.getTimetable;
-
 export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context);
   alexa.APP_ID = APP_ID;
@@ -22,7 +19,8 @@ export function handler (event, context, callback) {
 
 const handlers = {
   'LaunchRequest': function () {
-    const recentTimes = koigakuboTimetable.getRecentTiems();
+    const koigakuboTimetable = new KoigakuboTimetable()
+    const recentTimes = koigakuboTimetable.getRecentTiems()
     const timesString = recentTimes.map(time => {
       return `${time.hour}時${time.minute}分`
     }).join('、')
