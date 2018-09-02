@@ -1,3 +1,10 @@
-# index.jsだけデプロイされれば良い
-./*
-!./index.js
+# ルートのファイルは index.js だけデプロイされれば良い
+# TOTO: 拡張子を指定しなくてもうまくいくようにする
+*.js
+*.json
+*.md
+!index.js
+
+node_modules/
+src/
+test/
