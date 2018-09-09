@@ -8,12 +8,22 @@ interface Timetable {
 
 export default class KoigakuboTimetable implements Timetable {
   constructor(private timetable?: number[][], private nowDate?: Date) {
-    if (typeof timetable === 'undefined') {
-      this.timetable = weekday
-    }
     if (typeof nowDate === 'undefined') {
       this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
+
+    if (typeof timetable === 'undefined') {
+      if (this.isWeekend) {
+        this.timetable = weekend
+      } else {
+        this.timetable = weekday
+      }
+    }
+  }
+
+  private get isWeekend (): boolean {
+    const day = this.nowDate.getDay()
+    return [0, 6].indexOf(day) !== -1
   }
 
   get getTimetable () {
