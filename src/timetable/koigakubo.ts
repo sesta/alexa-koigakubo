@@ -57,7 +57,7 @@ export default class KoigakuboTimetable implements Timetable {
   }
 }
 
-export const weekday = [
+export const weekday: number[][] = [
   /*  0時 */ [12],
   /*  1時 */ [],
   /*  2時 */ [],
@@ -84,7 +84,7 @@ export const weekday = [
   /* 23時 */ [9, 23, 37, 57]
 ]
 
-export const weekend = [
+export const weekend: number[][] = [
   /*  0時 */ [],
   /*  1時 */ [],
   /*  2時 */ [],
