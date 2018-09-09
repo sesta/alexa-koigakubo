@@ -5,10 +5,10 @@ import KoigakuboTimetable from './timetable/koigakubo'
 //Make sure to enclose your value in quotes, like this: APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1"
 const APP_ID = undefined
 
-const SKILL_NAME = "電車の時間"
-const HELP_MESSAGE = "ヘルプのメッセージが入るよ"
-const HELP_REPROMPT = "どうしますか？"
-const STOP_MESSAGE = "さようなら"
+const SKILL_NAME = '電車の時間'
+const HELP_MESSAGE = 'ヘルプのメッセージが入るよ'
+const HELP_REPROMPT = 'どうしますか？'
+const STOP_MESSAGE = 'さようなら'
 
 export function handler (event, context, callback) {
   const alexa = Alexa.handler(event, context)
