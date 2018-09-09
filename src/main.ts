@@ -20,15 +20,19 @@ const handlers: {[key: string]: () => void} = {
     ).join('、')
 
     const message = `近い順に${timeMessage}です`
+    // tslint:disable-next-line:no-invalid-this
     this.emit(':tellWithCard', message, '電車の時間', message)
   },
   'AMAZON.HelpIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
     this.emit(':ask', 'ヘルプのメッセージが入るよ', 'どうしますか？')
   },
   'AMAZON.CancelIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
     this.emit(':tell', 'さようなら')
   },
   'AMAZON.StopIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
     this.emit(':tell', 'さようなら')
   },
   'SessionEndedRequest'(): void {
