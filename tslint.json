@@ -126,7 +126,6 @@
     "no-unnecessary-initializer": true,
     "no-unnecessary-qualifier": true,
     "number-literal-format": true,
-    "object-literal-key-quotes": [ true, "always" ],
     "object-literal-shorthand": true,
     "one-line": [ true, "check-catch", "check-finally", "check-else", "check-open-brace", "check-whitespace" ],
     "one-variable-per-declaration": [ true, "ignore-for-loop" ],
