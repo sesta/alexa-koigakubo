@@ -1,12 +1,12 @@
-interface Timetable {
+interface ITimetable {
   getTimetable: number[][]
-  getRecentTiems (): Array<{
+  getRecentTiems(): Array<{
     hour: number,
-    minute: number
+    minute: number,
   }>
 }
 
-export default class KoigakuboTimetable implements Timetable {
+export default class KoigakuboTimetable implements ITimetable {
   constructor(private timetable?: number[][], private nowDate?: Date) {
     if (typeof nowDate === 'undefined') {
       this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
@@ -21,29 +21,29 @@ export default class KoigakuboTimetable implements Timetable {
     }
   }
 
-  private get isWeekend (): boolean {
+  private get isWeekend(): boolean {
     const day = this.nowDate.getDay()
     return [0, 6].indexOf(day) !== -1
   }
 
-  get getTimetable () {
+  get getTimetable() {
     return this.timetable
   }
 
-  getRecentTiems () {
+  public getRecentTiems() {
     const nowHour = this.nowDate.getHours()
     const nowMinute = this.nowDate.getMinutes()
     const recentTiems: Array<{ hour: number, minute: number }> = []
 
     for (let hour = nowHour ; hour < 24 ; hour++) {
       const minutes = this.timetable[hour]
-      for (let minuteIndex = 0 ; minuteIndex < minutes.length ; minuteIndex++) {
+      for (const minuteIndex of minutes) {
         const diffMinute = (hour - nowHour) * 60 + (minutes[minuteIndex] - nowMinute)
 
         if (diffMinute > 5) {
           recentTiems.push({
             hour,
-            minute: minutes[minuteIndex]
+            minute: minutes[minuteIndex],
           })
         }
 
@@ -81,7 +81,7 @@ export const weekday: number[][] = [
   /* 20時 */ [0, 10, 20, 30, 40, 50],
   /* 21時 */ [0, 12, 22, 33, 45, 54],
   /* 22時 */ [8, 22, 37, 52],
-  /* 23時 */ [9, 23, 37, 57]
+  /* 23時 */ [9, 23, 37, 57],
 ]
 
 export const weekend: number[][] = [
@@ -108,5 +108,5 @@ export const weekend: number[][] = [
   /* 20時 */ [5, 15, 25, 35, 45, 55],
   /* 21時 */ [13, 28, 43, 58],
   /* 22時 */ [13, 27, 43, 58],
-  /* 23時 */ [13, 32, 54]
+  /* 23時 */ [13, 32, 54],
 ]
