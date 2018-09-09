@@ -16,5 +16,9 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "test": "mocha --compilers ts:espower-typescript/guess test/*.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "chai": "^4.1.2"
   }
 }

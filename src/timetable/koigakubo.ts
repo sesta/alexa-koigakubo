@@ -8,12 +8,22 @@ interface Timetable {
 
 export default class KoigakuboTimetable implements Timetable {
   constructor(private timetable?: number[][], private nowDate?: Date) {
-    if (typeof timetable === 'undefined') {
-      this.timetable = weekday
-    }
     if (typeof nowDate === 'undefined') {
       this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
+
+    if (typeof timetable === 'undefined') {
+      if (this.isWeekend) {
+        this.timetable = weekend
+      } else {
+        this.timetable = weekday
+      }
+    }
+  }
+
+  private get isWeekend (): boolean {
+    const day = this.nowDate.getDay()
+    return [0, 6].indexOf(day) !== -1
   }
 
   get getTimetable () {
@@ -45,11 +55,9 @@ export default class KoigakuboTimetable implements Timetable {
 
     return recentTiems
   }
-
-  // TODO: getWeekend も実装する
 }
 
-export const weekday = [
+export const weekday: number[][] = [
   /*  0時 */ [12],
   /*  1時 */ [],
   /*  2時 */ [],
@@ -73,5 +81,32 @@ export const weekday = [
   /* 20時 */ [0, 10, 20, 30, 40, 50],
   /* 21時 */ [0, 12, 22, 33, 45, 54],
   /* 22時 */ [8, 22, 37, 52],
-  /* 23時 */ [9, 23, 37, 57]  
+  /* 23時 */ [9, 23, 37, 57]
+]
+
+export const weekend: number[][] = [
+  /*  0時 */ [],
+  /*  1時 */ [],
+  /*  2時 */ [],
+  /*  3時 */ [],
+  /*  4時 */ [],
+  /*  5時 */ [13, 33, 49],
+  /*  6時 */ [3, 17, 34, 50],
+  /*  7時 */ [2, 12, 22, 32, 42, 52],
+  /*  8時 */ [2, 12, 22, 32, 42, 52],
+  /*  9時 */ [2, 12, 22, 32, 43, 54],
+  /* 10時 */ [4, 15, 25, 35, 46, 55],
+  /* 11時 */ [5, 15, 25, 35, 46, 55],
+  /* 12時 */ [5, 15, 25, 35, 46, 55],
+  /* 13時 */ [5, 15, 25, 35, 46, 55],
+  /* 14時 */ [5, 15, 25, 35, 46, 55],
+  /* 15時 */ [5, 15, 25, 35, 46, 55],
+  /* 16時 */ [6, 16, 26, 36, 46, 55],
+  /* 17時 */ [5, 15, 25, 35, 44, 55],
+  /* 18時 */ [5, 15, 25, 35, 45, 55],
+  /* 19時 */ [5, 15, 25, 35, 45, 55],
+  /* 20時 */ [5, 15, 25, 35, 45, 55],
+  /* 21時 */ [13, 28, 43, 58],
+  /* 22時 */ [13, 27, 43, 58],
+  /* 23時 */ [13, 32, 54]
 ]

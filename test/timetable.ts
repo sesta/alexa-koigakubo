@@ -1,10 +1,17 @@
-import assert from 'assert'
-import KoigakuboTimetable, { weekday } from '../src/timetable/koigakubo'
+import { assert } from 'chai'
+import KoigakuboTimetable, { weekday, weekend } from '../src/timetable/koigakubo'
 
 describe('cosntructor', () => {
-  it ('指定しない場合weekdayで初期化される', () => {
-    const koigakuboTimetable = new KoigakuboTimetable()
+  it ('月曜日の場合weekdayで初期化される', () => {
+    const testDate = new Date('2018/9/10')
+    const koigakuboTimetable = new KoigakuboTimetable(undefined, testDate)
     assert.equal(koigakuboTimetable.getTimetable, weekday)
+  })
+
+  it ('土曜日の場合weekendで初期化される', () => {
+    const testDate = new Date('2018/9/8')
+    const koigakuboTimetable = new KoigakuboTimetable(undefined, testDate)
+    assert.equal(koigakuboTimetable.getTimetable, weekend)
   })
 
   it ('指定したtimetableで初期化できる', () => {
