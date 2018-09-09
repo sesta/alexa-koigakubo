@@ -1,39 +1,39 @@
-interface ITimetable {
+interface Timetable {
   getTimetable: number[][]
-  getRecentTiems(): Array<{
-    hour: number,
-    minute: number,
-  }>
+  getRecentTiems(): {
+    hour: number;
+    minute: number;
+  }[]
 }
 
-export default class KoigakuboTimetable implements ITimetable {
-  constructor(private timetable?: number[][], private nowDate?: Date) {
+export class KoigakuboTimetable implements Timetable {
+  private timetable: number[][]
+  private nowDate: Date
+
+  constructor(timetable?: number[][], nowDate?: Date) {
     if (typeof nowDate === 'undefined') {
       this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
 
     if (typeof timetable === 'undefined') {
-      if (this.isWeekend) {
-        this.timetable = weekend
-      } else {
-        this.timetable = weekday
-      }
+      this.timetable = this.isWeekend ? weekend : weekday
     }
   }
 
   private get isWeekend(): boolean {
     const day = this.nowDate.getDay()
+
     return [0, 6].indexOf(day) !== -1
   }
 
-  get getTimetable() {
+  get getTimetable(): number[][] {
     return this.timetable
   }
 
-  public getRecentTiems() {
+  public getRecentTiems(): { hour: number; minute: number }[] {
     const nowHour = this.nowDate.getHours()
     const nowMinute = this.nowDate.getMinutes()
-    const recentTiems: Array<{ hour: number, minute: number }> = []
+    const recentTiems: { hour: number; minute: number }[] = []
 
     for (let hour = nowHour ; hour < this.timetable.length ; hour++) {
       const minutes = this.timetable[hour]
