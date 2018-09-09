@@ -16,7 +16,7 @@ describe('cosntructor', () => {
 
   it ('指定したtimetableで初期化できる', () => {
     const test = [
-      [1, 2, 3]
+      [1, 2, 3],
     ]
     const koigakuboTimetable = new KoigakuboTimetable(test)
     assert.equal(koigakuboTimetable.getTimetable, test)
@@ -27,7 +27,7 @@ describe('gerRecentTimes', () => {
   const testTimetable = [
     [0],
     [10, 20, 30],
-    [ 0, 40, 50]
+    [ 0, 40, 50],
   ]
   const testDate = new Date(2018, 9, 2, 1, 6)
   const koigakuboTimetable = new KoigakuboTimetable(testTimetable, testDate)
