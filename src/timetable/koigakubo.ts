@@ -35,16 +35,14 @@ export default class KoigakuboTimetable implements ITimetable {
     const nowMinute = this.nowDate.getMinutes()
     const recentTiems: Array<{ hour: number, minute: number }> = []
 
-    for (let hour = nowHour ; hour < 24 ; hour++) {
+    for (let hour = nowHour ; hour < this.timetable.length ; hour++) {
       const minutes = this.timetable[hour]
-      for (const minuteIndex of minutes) {
-        const diffMinute = (hour - nowHour) * 60 + (minutes[minuteIndex] - nowMinute)
+
+      for (const minute of minutes) {
+        const diffMinute = (hour - nowHour) * 60 + (minute - nowMinute)
 
         if (diffMinute > 5) {
-          recentTiems.push({
-            hour,
-            minute: minutes[minuteIndex],
-          })
+          recentTiems.push({ hour, minute })
         }
 
         if (recentTiems.length >= 3) {
