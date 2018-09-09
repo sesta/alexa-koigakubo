@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import KoigakuboTimetable, { weekday } from '../src/timetable/koigakubo'
 
 describe('cosntructor', () => {
