@@ -10,7 +10,7 @@ const STOP_MESSAGE = 'さようなら'
 
 export function handler(event, context, callback) {
   const alexa = Alexa.handler(event, context)
-  alexa.APP_ID = APP_ID
+  alexa.appId = APP_ID
   alexa.registerHandlers(handlers)
   alexa.execute()
 }
