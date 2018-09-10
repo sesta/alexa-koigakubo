@@ -10,11 +10,13 @@ export class KoigakuboTimetable implements Timetable {
   private timetable: number[][]
   private nowDate: Date
 
-  constructor(timetable?: number[][], nowDate?: Date) {
-    if (typeof nowDate === 'undefined') {
+  constructor(timetable?: number[][], date?: Date) {
+    this.nowDate = date
+    if (typeof date === 'undefined') {
       this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
     }
 
+    this.timetable = timetable
     if (typeof timetable === 'undefined') {
       this.timetable = this.isWeekend ? weekend : weekday
     }
