@@ -1,43 +1,41 @@
 import * as Alexa from 'alexa-sdk'
-import KoigakuboTimetable from './timetable/koigakubo'
+import * as Koigakubo from './timetable/koigakubo'
 
-const APP_ID = undefined
+const APP_ID: string = undefined
 
-const SKILL_NAME = '電車の時間'
-const HELP_MESSAGE = 'ヘルプのメッセージが入るよ'
-const HELP_REPROMPT = 'どうしますか？'
-const STOP_MESSAGE = 'さようなら'
-
-export function handler(event, context, callback) {
+// もっといい感じに型などを定義できるようにする
+export const handler = (event: Alexa.RequestBody<Alexa.Request>, context: Alexa.Context): void => {
   const alexa = Alexa.handler(event, context)
   alexa.appId = APP_ID
   alexa.registerHandlers(handlers)
   alexa.execute()
 }
 
-const handlers = {
-  'LaunchRequest'() {
-    const koigakuboTimetable = new KoigakuboTimetable()
+const handlers: {[key: string]: () => void} = {
+  'LaunchRequest'(): void {
+    const koigakuboTimetable = new Koigakubo.KoigakuboTimetable()
     const recentTimes = koigakuboTimetable.getRecentTiems()
-    const timesString = recentTimes.map((time) => {
-      return `${time.hour}時${time.minute}分`
-    }).join('、')
+    const timeMessage = recentTimes.map((time: {hour: number; minute: number}) =>
+      `${time.hour}時${time.minute}分`
+    ).join('、')
 
-    const message: string = `近い順に${timesString}です`
-    this.emit(':tellWithCard', message, SKILL_NAME, message)
+    const message = `近い順に${timeMessage}です`
+    // tslint:disable-next-line:no-invalid-this
+    this.emit(':tellWithCard', message, '電車の時間', message)
   },
-  'AMAZON.HelpIntent'() {
-    const speechOutput = HELP_MESSAGE
-    const reprompt = HELP_REPROMPT
-    this.emit(':ask', speechOutput, reprompt)
+  'AMAZON.HelpIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
+    this.emit(':ask', 'ヘルプのメッセージが入るよ', 'どうしますか？')
   },
-  'AMAZON.CancelIntent'() {
-    this.emit(':tell', STOP_MESSAGE)
+  'AMAZON.CancelIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
+    this.emit(':tell', 'さようなら')
   },
-  'AMAZON.StopIntent'() {
-    this.emit(':tell', STOP_MESSAGE)
+  'AMAZON.StopIntent'(): void {
+    // tslint:disable-next-line:no-invalid-this
+    this.emit(':tell', 'さようなら')
   },
-  'SessionEndedRequest'() {
+  'SessionEndedRequest'(): void {
     // Nothing to do
-  },
+  }
 }
