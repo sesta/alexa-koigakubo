@@ -1,5 +1,5 @@
 import * as Alexa from 'alexa-sdk'
-import * as Koigakubo from './timetable/koigakubo'
+import { KoigakuboTimetable } from './timetable/koigakubo'
 
 const APP_ID: string = undefined
 
@@ -13,7 +13,7 @@ export const handler = (event: Alexa.RequestBody<Alexa.Request>, context: Alexa.
 
 const handlers: {[key: string]: () => void} = {
   'LaunchRequest'(): void {
-    const koigakuboTimetable = new Koigakubo.KoigakuboTimetable()
+    const koigakuboTimetable = new KoigakuboTimetable()
     const recentTimes = koigakuboTimetable.getRecentTiems()
     const timeMessage = recentTimes.map((time: {hour: number; minute: number}) =>
       `${time.hour}時${time.minute}分`
