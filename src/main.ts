@@ -3,7 +3,6 @@ import { KoigakuboTimetable } from './timetable/koigakubo'
 
 const APP_ID: string = undefined
 
-// もっといい感じに型などを定義できるようにする
 export const handler = (event: Alexa.RequestBody<Alexa.Request>, context: Alexa.Context): void => {
   const alexa = Alexa.handler(event, context)
   alexa.appId = APP_ID
