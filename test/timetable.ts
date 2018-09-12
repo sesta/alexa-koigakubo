@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import { KoigakuboTimetable, weekday, weekend } from '../src/timetable/koigakubo'
 

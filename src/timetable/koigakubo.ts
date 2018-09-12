@@ -1,4 +1,5 @@
-import moment, { Moment } from 'moment'
+import moment, { Moment } from 'moment-timezone'
+moment.tz.setDefault('Asia/Tokyo')
 
 interface Timetable {
   getTimetable: number[][]
