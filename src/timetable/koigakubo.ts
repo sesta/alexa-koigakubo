@@ -1,3 +1,6 @@
+import moment, { Moment } from 'moment-timezone'
+moment.tz.setDefault('Asia/Tokyo')
+
 interface Timetable {
   getTimetable: number[][]
   getRecentTiems(): {
@@ -8,12 +11,12 @@ interface Timetable {
 
 export class KoigakuboTimetable implements Timetable {
   private timetable: number[][]
-  private nowDate: Date
+  private now: Moment
 
-  constructor(timetable?: number[][], date?: Date) {
-    this.nowDate = date
-    if (typeof date === 'undefined') {
-      this.nowDate = new Date(Date.now() - (-9 * 60 - new Date().getTimezoneOffset()) * 60000)
+  constructor(timetable?: number[][], now?: Moment) {
+    this.now = now
+    if (typeof now === 'undefined') {
+      this.now = moment()
     }
 
     this.timetable = timetable
@@ -23,7 +26,7 @@ export class KoigakuboTimetable implements Timetable {
   }
 
   private get isWeekend(): boolean {
-    const day = this.nowDate.getDay()
+    const day = this.now.day()
 
     return [0, 6].indexOf(day) !== -1
   }
@@ -33,8 +36,8 @@ export class KoigakuboTimetable implements Timetable {
   }
 
   public getRecentTiems(): { hour: number; minute: number }[] {
-    const nowHour = this.nowDate.getHours()
-    const nowMinute = this.nowDate.getMinutes()
+    const nowHour = this.now.hours()
+    const nowMinute = this.now.minutes()
     const recentTiems: { hour: number; minute: number }[] = []
 
     for (let hour = nowHour ; hour < this.timetable.length ; hour++) {

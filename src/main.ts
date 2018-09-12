@@ -1,4 +1,5 @@
 import * as Alexa from 'alexa-sdk'
+
 import { KoigakuboTimetable } from './timetable/koigakubo'
 
 const APP_ID: string = undefined
