@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/alexa-sdk": "^1.1.1",
     "alexa-sdk": "^1.0.25",
+    "moment": "^2.22.2",
     "ts-loader": "^4.5.0",
     "typescript": "^3.0.1",
     "webpack": "^4.17.2",
