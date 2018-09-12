@@ -1,11 +1,11 @@
-import * as Alexa from 'alexa-sdk'
+import { Context, handler, Request, RequestBody } from 'alexa-sdk'
 
 import { KoigakuboTimetable } from './timetable/koigakubo'
 
 const APP_ID: string = undefined
 
-export const handler = (event: Alexa.RequestBody<Alexa.Request>, context: Alexa.Context): void => {
-  const alexa = Alexa.handler(event, context)
+export const handle = (event: RequestBody<Request>, context: Context): void => {
+  const alexa = handler(event, context)
   alexa.appId = APP_ID
   alexa.registerHandlers(handlers)
   alexa.execute()

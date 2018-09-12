@@ -1,5 +1,5 @@
 {
   "description": "Koigakubo train time skil",
-  "handler": "index.handler",
+  "handler": "index.handle",
   "runtime": "nodejs8.10"
 }
