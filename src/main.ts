@@ -15,11 +15,15 @@ const handlers: {[key: string]: () => void} = {
   'LaunchRequest'(): void {
     const koigakuboTimetable = new KoigakuboTimetable()
     const recentTimes = koigakuboTimetable.getRecentTiems()
-    const timeMessage = recentTimes.map((time: {hour: number; minute: number}) =>
-      `${time.hour}時${time.minute}分`
-    ).join('、')
 
-    const message = `近い順に${timeMessage}です`
+    let message = '今日はもう電車がありません'
+    if (recentTimes.length > 0) {
+      const timeMessage = recentTimes.map((time: {hour: number; minute: number}) =>
+        `${time.hour}時${time.minute}分`
+      ).join('、')
+      message = `近い順に${timeMessage}です`
+    }
+
     // tslint:disable-next-line:no-invalid-this
     this.emit(':tellWithCard', message, '電車の時間', message)
   },
