@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import moment from 'moment-timezone'
 
-import { KoigakuboTimetable, weekday, weekend } from '../src/timetable/koigakubo'
+import { KoigakuboTimetable, weekday, weekend } from '../src/timetable'
 
 describe('cosntructor', () => {
   it ('月曜日の場合weekdayで初期化される', () => {

@@ -1,6 +1,6 @@
 import { Context, handler, Request, RequestBody } from 'alexa-sdk'
 
-import { KoigakuboTimetable } from './timetable/koigakubo'
+import { KoigakuboTimetable } from './timetable'
 
 const APP_ID: string = undefined
 
