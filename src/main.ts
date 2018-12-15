@@ -25,11 +25,11 @@ const handlers: {[key: string]: () => void} = {
     }
 
     // tslint:disable-next-line:no-invalid-this
-    this.emit(':tellWithCard', message, '電車の時間', message)
+    this.emit(':tellWithCard', message, '恋ヶ窪の電車', message)
   },
   'AMAZON.HelpIntent'(): void {
     // tslint:disable-next-line:no-invalid-this
-    this.emit(':ask', 'ヘルプのメッセージが入るよ', 'どうしますか？')
+    this.emit(':ask', '恋ヶ窪発、国分寺行きの電車の時間を近い順に3つお伝えします。')
   },
   'AMAZON.CancelIntent'(): void {
     // tslint:disable-next-line:no-invalid-this
