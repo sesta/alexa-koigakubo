@@ -10,7 +10,7 @@ export function getRecentTimes(): Time[] {
   const now = moment()
   const day = now.day()
   const timetable = [0, 6].indexOf(day) !== -1
-    ? weekendTimeTable
+    ? weekendTimetable
     : weekdayTimetable
 
   const nowHour = now.hours()
@@ -63,7 +63,7 @@ export const weekdayTimetable: number[][] = [
   /* 23時 */ [9, 23, 37, 57],
 ]
 
-export const weekendTimeTable: number[][] = [
+export const weekendTimetable: number[][] = [
   /*  0時 */ [],
   /*  1時 */ [],
   /*  2時 */ [],
