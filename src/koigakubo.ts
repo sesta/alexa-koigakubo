@@ -36,7 +36,7 @@ export function getRecentTimes(): Time[] {
   return recentTiems
 }
 
-const weekdayTimetable: number[][] = [
+export const weekdayTimetable: number[][] = [
   /*  0時 */ [12],
   /*  1時 */ [],
   /*  2時 */ [],
@@ -63,7 +63,7 @@ const weekdayTimetable: number[][] = [
   /* 23時 */ [9, 23, 37, 57],
 ]
 
-const weekendTimeTable: number[][] = [
+export const weekendTimeTable: number[][] = [
   /*  0時 */ [],
   /*  1時 */ [],
   /*  2時 */ [],
