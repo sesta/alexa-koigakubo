@@ -1,7 +1,7 @@
 import { HandlerInput, Skill, SkillBuilders } from 'ask-sdk'
 import { Context, RequestEnvelope, Response, ResponseEnvelope } from 'ask-sdk-model'
 
-import { KoigakuboTimetable } from './timetable'
+import { getRecentTimes } from './koigakubo'
 
 let skill: Skill
 
@@ -21,8 +21,7 @@ const launchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
   },
   handle(handlerInput: HandlerInput): Response {
-    const koigakuboTimetable = new KoigakuboTimetable()
-    const recentTimes = koigakuboTimetable.getRecentTiems()
+    const recentTimes = getRecentTimes()
 
     let message = '今日はもう電車がありません'
     if (recentTimes.length > 0) {

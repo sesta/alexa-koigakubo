@@ -1,66 +1,42 @@
-import moment, { Moment } from 'moment-timezone'
+import moment from 'moment-timezone'
 moment.tz.setDefault('Asia/Tokyo')
 
-interface Timetable {
-  getTimetable: number[][]
-  getRecentTiems(): {
-    hour: number;
-    minute: number;
-  }[]
+interface Time {
+  hour: number
+  minute: number
 }
 
-export class KoigakuboTimetable implements Timetable {
-  private timetable: number[][]
-  private now: Moment
+export function getRecentTimes(): Time[] {
+  const now = moment()
+  const day = now.day()
+  const timetable = [0, 6].indexOf(day) !== -1
+    ? weekendTimetable
+    : weekdayTimetable
 
-  constructor(timetable?: number[][], now?: Moment) {
-    this.now = now
-    if (typeof now === 'undefined') {
-      this.now = moment()
-    }
+  const nowHour = now.hours()
+  const nowMinute = now.minutes()
+  const recentTiems: Time[] = []
 
-    this.timetable = timetable
-    if (typeof timetable === 'undefined') {
-      this.timetable = this.isWeekend ? weekend : weekday
-    }
-  }
+  for (let hour = nowHour ; hour < timetable.length ; hour++) {
+    const minutes = timetable[hour]
 
-  private get isWeekend(): boolean {
-    const day = this.now.day()
+    for (const minute of minutes) {
+      const diffMinute = (hour - nowHour) * 60 + (minute - nowMinute)
 
-    return [0, 6].indexOf(day) !== -1
-  }
+      if (diffMinute > 5) {
+        recentTiems.push({ hour, minute })
+      }
 
-  get getTimetable(): number[][] {
-    return this.timetable
-  }
-
-  public getRecentTiems(): { hour: number; minute: number }[] {
-    const nowHour = this.now.hours()
-    const nowMinute = this.now.minutes()
-    const recentTiems: { hour: number; minute: number }[] = []
-
-    for (let hour = nowHour ; hour < this.timetable.length ; hour++) {
-      const minutes = this.timetable[hour]
-
-      for (const minute of minutes) {
-        const diffMinute = (hour - nowHour) * 60 + (minute - nowMinute)
-
-        if (diffMinute > 5) {
-          recentTiems.push({ hour, minute })
-        }
-
-        if (recentTiems.length >= 3) {
-          return recentTiems
-        }
+      if (recentTiems.length >= 3) {
+        return recentTiems
       }
     }
-
-    return recentTiems
   }
+
+  return recentTiems
 }
 
-export const weekday: number[][] = [
+export const weekdayTimetable: number[][] = [
   /*  0時 */ [12],
   /*  1時 */ [],
   /*  2時 */ [],
@@ -87,7 +63,7 @@ export const weekday: number[][] = [
   /* 23時 */ [9, 23, 37, 57],
 ]
 
-export const weekend: number[][] = [
+export const weekendTimetable: number[][] = [
   /*  0時 */ [],
   /*  1時 */ [],
   /*  2時 */ [],
