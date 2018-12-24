@@ -1,18 +1,26 @@
-import { Context, handler, Request, RequestBody } from 'alexa-sdk'
+import { HandlerInput, Skill, SkillBuilders } from 'ask-sdk'
+import { Context, RequestEnvelope, Response, ResponseEnvelope } from 'ask-sdk-model'
 
 import { KoigakuboTimetable } from './timetable'
 
-const APP_ID: string = undefined
+let skill: Skill
 
-export const handle = (event: RequestBody<Request>, context: Context): void => {
-  const alexa = handler(event, context)
-  alexa.appId = APP_ID
-  alexa.registerHandlers(handlers)
-  alexa.execute()
+export const handler = async(event: RequestEnvelope, context: Context): Promise<ResponseEnvelope> => {
+  if (!skill) {
+    skill = SkillBuilders.custom()
+      .addRequestHandlers(launchRequestHandler)
+      .addErrorHandlers(errorHandler)
+      .create()
+  }
+
+  return skill.invoke(event, context)
 }
 
-const handlers: {[key: string]: () => void} = {
-  'LaunchRequest'(): void {
+const launchRequestHandler = {
+  canHandle(handlerInput: HandlerInput): boolean {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
+  },
+  handle(handlerInput: HandlerInput): Response {
     const koigakuboTimetable = new KoigakuboTimetable()
     const recentTimes = koigakuboTimetable.getRecentTiems()
 
@@ -24,22 +32,22 @@ const handlers: {[key: string]: () => void} = {
       message = `近い順に${timeMessage}です`
     }
 
-    // tslint:disable-next-line:no-invalid-this
-    this.emit(':tellWithCard', message, '恋ヶ窪の電車', message)
+    return handlerInput.responseBuilder
+      .speak(message)
+      .withSimpleCard('恋ヶ窪の電車', message)
+      .getResponse()
+  }
+}
+
+const errorHandler = {
+  canHandle(): boolean {
+    return true
   },
-  'AMAZON.HelpIntent'(): void {
-    // tslint:disable-next-line:no-invalid-this
-    this.emit(':ask', '恋ヶ窪発、国分寺行きの電車の時間を近い順に3つお伝えします。')
-  },
-  'AMAZON.CancelIntent'(): void {
-    // tslint:disable-next-line:no-invalid-this
-    this.emit(':tell', 'さようなら')
-  },
-  'AMAZON.StopIntent'(): void {
-    // tslint:disable-next-line:no-invalid-this
-    this.emit(':tell', 'さようなら')
-  },
-  'SessionEndedRequest'(): void {
-    // Nothing to do
+  handle(handlerInput: HandlerInput, error: Error): Response {
+    console.log(error)
+
+    return handlerInput.responseBuilder
+      .speak('申し訳ありません、メンテナンス中ですので時間をおいてお試しください')
+      .getResponse()
   }
 }
